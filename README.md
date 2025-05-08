@@ -35,5 +35,5 @@ NLP Based agricultural chatbot
 
 ---
 
-## 📁 Project Structure
+
 
