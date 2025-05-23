@@ -3,119 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kissan Mitra - Your Farming Assistant</title>
+    <title>Kissan Mitra - Your 3D Farming Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-green: #2d572c;
+            --secondary-green: #4d7333;
+            --light-green: #88c070;
+            --cream: #fef7e5;
+            --sky-blue: #b3e5fc;
+            --dark-blue: #1a237e;
+        }
+        
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #88c070, #e2f0cb);
+            background: linear-gradient(135deg, var(--light-green), var(--cream));
             color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         /* Floating Vegetables */
         .floating-veggie {
             position: absolute;
-            width: 50px;
-            opacity: 0.8;
-            animation: floatVeggie 5s infinite ease-in-out alternate;
+            width: 60px;
+            height: 60px;
+            opacity: 0.7;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+            animation: floatVeggie 8s infinite ease-in-out alternate;
+            z-index: 1;
         }
 
         @keyframes floatVeggie {
             0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(15deg); }
+            50% { transform: translateY(-30px) rotate(15deg); }
             100% { transform: translateY(0) rotate(0deg); }
         }
 
+        /* Chat Container */
         .chat-container {
-            max-width: 800px;
+            max-width: 850px;
             width: 90%;
             margin: 20px;
-            background: #fef7e5;
+            background: var(--cream);
             padding: 30px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border-radius: 25px;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(5px);
         }
 
         .chat-header {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             text-align: center;
-            color: #2d572c;
+            color: var(--primary-green);
             margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .chat-header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--secondary-green), transparent);
+            border-radius: 2px;
         }
 
         .chat-box {
-            height: 400px;
+            height: 450px;
             overflow-y: auto;
-            border: 2px solid #4d7333;
+            border: 3px solid var(--secondary-green);
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 18px;
             margin-bottom: 25px;
             background: #ffffff;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
         }
 
         .chat-input-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .chat-input {
             flex-grow: 1;
-            padding: 15px;
-            border: 2px solid #4d7333;
-            border-radius: 12px;
-            font-size: 1.1rem;
-        }
-
-        .send-btn {
-            padding: 15px 20px;
-            background-color: #4d7333;
-            color: white;
-            border: none;
-            font-size: 1.1rem;
-            border-radius: 12px;
-            cursor: pointer;
+            padding: 18px;
+            border: 3px solid var(--secondary-green);
+            border-radius: 15px;
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
 
-        .send-btn:hover {
-            background-color: #2d572c;
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 5px 20px rgba(77, 115, 51, 0.2);
             transform: translateY(-2px);
         }
 
+        .send-btn {
+            padding: 18px 25px;
+            background-color: var(--secondary-green);
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .send-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .send-btn:hover {
+            background-color: var(--primary-green);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(45, 87, 44, 0.3);
+        }
+
+        .send-btn:hover::before {
+            left: 100%;
+        }
+
         .message {
-            margin: 12px 0;
-            padding: 12px;
-            border-radius: 12px;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
             max-width: 80%;
             word-wrap: break-word;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            animation: messageAppear 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes messageAppear {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .user-message {
-            background-color: #b3e5fc;
+            background-color: var(--sky-blue);
             margin-left: auto;
             text-align: right;
-            color: #1a237e;
+            color: var(--dark-blue);
+            border-top-right-radius: 5px;
         }
 
         .bot-message {
-            background-color: #c7e6c8;
+            background-color: #d8f3d6;
             margin-right: auto;
-            color: #2d572c;
+            color: var(--primary-green);
+            border-top-left-radius: 5px;
         }
 
         /* Typing Animation */
         .typing-animation {
             display: inline-block;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             letter-spacing: 3px;
-            color: #2d572c;
+            color: var(--primary-green);
         }
 
         @keyframes typingDots {
@@ -129,46 +202,120 @@
             content: "";
             animation: typingDots 1.5s infinite;
         }
+
+        /* Quick Options */
+        .quick-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quick-option {
+            background-color: var(--light-green);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .quick-option:hover {
+            background-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chat-header {
+                font-size: 2rem;
+            }
+            
+            .chat-box {
+                height: 350px;
+            }
+            
+            .floating-veggie {
+                width: 40px;
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Floating Vegetables -->
-    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909883.png" style="top: 5%; left: 10%;">
-    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909883.png" style="top: 20%; right: 15%;">
-    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909883.png" style="top: 50%; left: 20%;">
-    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909883.png" style="top: 70%; right: 5%;">
+    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909883.png" style="top: 5%; left: 10%; animation-delay: 0s;">
+    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909769.png" style="top: 20%; right: 15%; animation-delay: 1s; width: 70px;">
+    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909899.png" style="top: 50%; left: 20%; animation-delay: 2s; width: 65px;">
+    <img class="floating-veggie" src="https://cdn-icons-png.flaticon.com/512/2909/2909776.png" style="top: 70%; right: 5%; animation-delay: 3s; width: 55px;">
 
     <div class="chat-container">
         <div class="chat-header">Kissan Mitra 🌱 - Your Farming Assistant</div>
         <div class="chat-box" id="chat-box"></div>
         <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chat-input" placeholder="Ask me anything..." />
+            <input type="text" class="chat-input" id="chat-input" placeholder="Ask me about crops, weather, or farming techniques..." />
             <button class="send-btn" onclick="sendMessage()">Send</button>
         </div>
     </div>
 
     <script>
+        // Initialize chat with greeting
         async function loadGreeting() {
             const chatBox = document.getElementById('chat-box');
-            const response = await fetch('/greeting');
-            const data = await response.json();
+            
+            try {
+                const response = await fetch('/greeting');
+                const data = await response.json();
+                
+                // Display greeting message
+                chatBox.innerHTML += `<div class="message bot-message"><strong>Kissan Mitra:</strong> ${data.response}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Display greeting message
-            chatBox.innerHTML += `<div class="message bot-message"><strong>Kissan Mitra:</strong> ${data.response}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
+                // Add quick options based on the greeting
+                addQuickOptions(['A. Crop Management', 'B. Market Intelligence', 'C. Financial Advisory', 'D. Buying Inputs', 'E. Selling Produce', 'F. Emergency']);
 
-            // Voice Greeting
-            if ('speechSynthesis' in window) {
-                const speech = new SpeechSynthesisUtterance(data.response.replace(/<br>/g, ' '));
-                speech.rate = 1;
-                speech.pitch = 1;
-                speech.volume = 1;
-                setTimeout(() => {
-                    speechSynthesis.speak(speech);
-                }, 1000);
+                // Voice Greeting
+                if ('speechSynthesis' in window) {
+                    const speech = new SpeechSynthesisUtterance(data.response.replace(/<br>/g, ' '));
+                    speech.rate = 0.9;
+                    speech.pitch = 1;
+                    speech.volume = 1;
+                    setTimeout(() => {
+                        speechSynthesis.speak(speech);
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Error loading greeting:', error);
+                chatBox.innerHTML += `<div class="message bot-message"><strong>Kissan Mitra:</strong> Welcome! How can I help you with your farming needs today?</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
             }
         }
 
+        // Add quick option buttons
+        function addQuickOptions(options) {
+            const chatBox = document.getElementById('chat-box');
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'quick-options';
+            
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'quick-option';
+                button.textContent = option;
+                button.onclick = () => {
+                    document.getElementById('chat-input').value = option.split('.')[0].trim();
+                    sendMessage();
+                };
+                optionsContainer.appendChild(button);
+            });
+            
+            chatBox.appendChild(optionsContainer);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Send message to backend
         async function sendMessage() {
             const chatBox = document.getElementById('chat-box');
             const chatInput = document.getElementById('chat-input');
@@ -176,32 +323,69 @@
 
             if (userMessage === "") return;
 
+            // Display user message
             chatBox.innerHTML += `<div class="message user-message"><strong>You:</strong> ${userMessage}</div>`;
             chatInput.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Typing Animation
+            // Show typing indicator
             const typingElement = document.createElement('div');
             typingElement.className = 'message bot-message typing-animation';
             typingElement.innerHTML = "<strong>Kissan Mitra:</strong> <span class='dots'></span>";
             chatBox.appendChild(typingElement);
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            setTimeout(async () => {
-                typingElement.remove(); // Remove typing animation
-
+            try {
+                // Send message to backend
                 const response = await fetch('/query', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ query: userMessage })
                 });
-
+                
                 const data = await response.json();
+                
+                // Remove typing indicator
+                typingElement.remove();
+                
+                // Display bot response
                 chatBox.innerHTML += `<div class="message bot-message"><strong>Kissan Mitra:</strong> ${data.response}</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 2000); // Delay response by 2 seconds
+                
+                // Add quick options for menu navigation if needed
+                if (data.response.includes('reply with') || data.response.includes('choose')) {
+                    const options = [];
+                    if (data.response.includes('1, 2, 3, or 4')) {
+                        options.push('1', '2', '3', '4');
+                    } else if (data.response.includes('1, 2, or 3')) {
+                        options.push('1', '2', '3');
+                    } else if (data.response.includes('1 or 2')) {
+                        options.push('1', '2');
+                    } else if (data.response.includes('A, B, C, D, E, or F')) {
+                        options.push('A', 'B', 'C', 'D', 'E', 'F');
+                    }
+                    
+                    if (options.length > 0) {
+                        addQuickOptions(options);
+                    }
+                }
+
+                // Voice response
+                if ('speechSynthesis' in window) {
+                    const speech = new SpeechSynthesisUtterance(data.response.replace(/<br>/g, ' '));
+                    speech.rate = 1;
+                    speech.pitch = 1;
+                    speechSynthesis.speak(speech);
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                typingElement.remove();
+                chatBox.innerHTML += `<div class="message bot-message"><strong>Kissan Mitra:</strong> Sorry, I encountered an error. Please try again.</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
         }
 
+        // Handle Enter key press
         document.getElementById('chat-input').addEventListener('keypress', function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
@@ -209,6 +393,7 @@
             }
         });
 
+        // Initialize chat when page loads
         window.onload = loadGreeting;
     </script>
 </body>
